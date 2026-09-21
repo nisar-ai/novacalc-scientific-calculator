@@ -267,28 +267,109 @@ st.markdown(
         color: #67e8f9;
     }
 
-    .about-card {
-        margin-top: 1rem;
-        padding: 1.35rem;
-        border: 1px solid rgba(167, 139, 250, 0.42);
-        border-radius: 19px;
-        background: linear-gradient(135deg, #211546, #312e81, #155e75);
-        color: white;
+    /* ========================================================
+       NEW: HIGH-CONTRAST DEVELOPER PROFILE AT PAGE BOTTOM
+       ======================================================== */
+    .developer-spotlight {
+        position: relative;
+        overflow: hidden;
+        margin-top: 1.35rem;
+        padding: 2rem 1.5rem;
+        border: 2px solid rgba(34, 211, 238, 0.72);
+        border-radius: 22px;
+        background:
+            radial-gradient(circle at 12% 15%, rgba(34, 211, 238, 0.30), transparent 34%),
+            radial-gradient(circle at 88% 80%, rgba(168, 85, 247, 0.34), transparent 35%),
+            linear-gradient(135deg, #0f172a 0%, #172554 52%, #0e7490 100%);
+        box-shadow:
+            0 20px 48px rgba(0, 0, 0, 0.35),
+            inset 0 1px 0 rgba(255, 255, 255, 0.14);
         text-align: center;
     }
 
-    .about-card h2 {
-        margin: 0 0 0.45rem;
-        font-size: 1.35rem;
+    .developer-spotlight::before {
+        content: "N";
+        position: absolute;
+        left: 3%;
+        top: -1.6rem;
+        color: rgba(255, 255, 255, 0.07);
+        font-size: 12rem;
         font-weight: 800;
+        line-height: 1;
+        pointer-events: none;
     }
 
-    .about-card p {
-        margin: 0.35rem auto;
-        max-width: 760px;
+    .developer-badge {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        margin-bottom: 0.75rem;
+        padding: 0.38rem 0.85rem;
+        border: 1px solid rgba(255, 255, 255, 0.30);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #cffafe;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+    }
+
+    .developer-name {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        color: #ffffff;
+        font-size: clamp(2rem, 5vw, 3.6rem);
+        font-weight: 800;
+        letter-spacing: -0.05em;
+        line-height: 1.08;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.32);
+    }
+
+    .developer-role {
+        position: relative;
+        z-index: 1;
+        margin: 0.65rem 0 0;
+        color: #a5f3fc;
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+
+    .cui-campus {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.8rem 1.15rem;
+        border: 1px solid rgba(250, 204, 21, 0.60);
+        border-radius: 13px;
+        background: rgba(250, 204, 21, 0.15);
+        color: #fef3c7;
+        font-size: clamp(1rem, 2vw, 1.22rem);
+        font-weight: 800;
+        line-height: 1.45;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .developer-note {
+        position: relative;
+        z-index: 1;
+        max-width: 780px;
+        margin: 1rem auto 0;
         color: rgba(255, 255, 255, 0.90);
         font-size: 0.92rem;
-        line-height: 1.6;
+        line-height: 1.65;
+    }
+
+    .developer-spotlight:hover {
+        transform: translateY(-2px);
+        border-color: #67e8f9;
+        box-shadow:
+            0 25px 56px rgba(0, 0, 0, 0.42),
+            0 0 28px rgba(34, 211, 238, 0.18);
+        transition: all 0.25s ease;
     }
 
     .footer {
@@ -419,6 +500,15 @@ st.markdown(
         .hero {
             padding: 1.2rem 0.8rem;
         }
+
+        .developer-spotlight {
+            padding: 1.5rem 0.9rem;
+        }
+
+        .cui-campus {
+            width: 100%;
+            box-sizing: border-box;
+        }
     }
     </style>
     """,
@@ -495,24 +585,6 @@ SHIFT_OPERATION_MAP = {
     "Floor ⌊x⌋": "Ceiling ⌈x⌉",
 }
 
-SHIFT_EXPLANATION = {
-    "Square (x²)": "Shift changes square into cube.",
-    "Cube (x³)": "Shift changes cube into square.",
-    "Square Root (√x)": "Shift changes square root into cube root.",
-    "Cube Root (∛x)": "Shift changes cube root into square root.",
-    "Natural Log (ln)": "Shift changes natural log into base-10 log.",
-    "Log Base 10 (log₁₀)": "Shift changes base-10 log into base-2 log.",
-    "Log Base 2 (log₂)": "Shift changes base-2 log into natural log.",
-    "Sine (sin)": "Shift changes sine into cosine.",
-    "Cosine (cos)": "Shift changes cosine into tangent.",
-    "Tangent (tan)": "Shift changes tangent into cotangent, the reciprocal of tangent.",
-    "Cosecant (csc)": "Shift changes cosecant into sine.",
-    "Secant (sec)": "Shift changes secant into cosine.",
-    "Cotangent (cot)": "Shift changes cotangent into sine.",
-    "Ceiling ⌈x⌉": "Shift changes ceiling into floor.",
-    "Floor ⌊x⌋": "Shift changes floor into ceiling.",
-}
-
 
 # ============================================================
 # SAFE EXPRESSION EVALUATION
@@ -534,10 +606,6 @@ UNARY_OPERATORS = {
 
 
 def safe_eval_expression(expression):
-    """
-    Safely evaluates basic arithmetic expressions.
-    Supported: +, -, *, /, %, //, ^, **, parentheses, decimals.
-    """
     expression = expression.strip().replace("^", "**")
 
     if not expression:
@@ -620,7 +688,6 @@ def format_number(value, decimals=10):
 
 
 def angle_value(value, angle_mode):
-    """Convert degrees to radians because Python math functions use radians."""
     if angle_mode == "Degrees":
         return math.radians(value)
     return value
@@ -633,7 +700,6 @@ def format_angle(value, angle_mode):
 
 
 def get_effective_operation(selected_operation, shift_mode):
-    """Return normal operation or shifted operation."""
     if shift_mode:
         return SHIFT_OPERATION_MAP.get(selected_operation, selected_operation)
     return selected_operation
@@ -663,8 +729,7 @@ def calculate_operation(num1, num2, operation, angle_mode):
         return num1 % num2, f"{num1} % {num2}"
 
     if operation == "Power (xʸ)":
-        result = num1 ** num2
-        return result, f"{num1}^{num2}"
+        return num1 ** num2, f"{num1}^{num2}"
 
     if operation == "Square (x²)":
         return num1 ** 2, f"{num1}²"
@@ -1228,10 +1293,10 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 
 # ============================================================
-# HELP CENTER AND ABOUT SECTION
+# HELP CENTER
 # ============================================================
-help_tab, shift_tab, about_tab = st.tabs(
-    ["📘 Complete Help", "⇧ Shift Mode Guide", "👨‍💻 About"]
+help_tab, shift_tab = st.tabs(
+    ["📘 Complete Help", "⇧ Shift Mode Guide"]
 )
 
 with help_tab:
@@ -1241,10 +1306,9 @@ with help_tab:
         """
         <div class="help-box">
             <strong>1. Quick Expression</strong><br>
-            Use this when you want to type a complete calculation yourself.
-            You can use <strong>+</strong>, <strong>-</strong>, <strong>*</strong>,
-            <strong>/</strong>, <strong>%</strong>, parentheses, and
-            <strong>^</strong> for powers.<br><br>
+            Type a complete expression using numbers, parentheses, and operators:
+            <strong>+</strong>, <strong>-</strong>, <strong>*</strong>,
+            <strong>/</strong>, <strong>%</strong>, and <strong>^</strong>.<br><br>
             Examples: <code>(25 + 5) * 3</code>,
             <code>2^8</code>, <code>(100 / 4) + 7.5</code>.
         </div>
@@ -1256,11 +1320,10 @@ with help_tab:
         """
         <div class="help-box">
             <strong>2. Scientific Operations</strong><br>
-            Select an operation from the dropdown, enter the first number,
-            and click <strong>Calculate</strong>. For two-number operations
-            such as addition, division, modulus, and power, enter both numbers.
-            For one-number functions such as square root, factorial, logarithm,
-            sine, cosine, or tangent, only the first number is used.
+            Choose an operation, enter the first number, and click
+            <strong>Calculate</strong>. Two-number operations include addition,
+            subtraction, multiplication, division, modulus, and power. One-number
+            operations include roots, factorial, trigonometry, and logarithms.
         </div>
         """,
         unsafe_allow_html=True,
@@ -1293,7 +1356,7 @@ with help_tab:
                 • Square root: <code>√81 = 9</code><br>
                 • Cube root: <code>∛27 = 3</code><br>
                 • Inverse: <code>1/4 = 0.25</code><br>
-                • ln, log₁₀, and log₂ only work for positive numbers.
+                • ln, log₁₀, and log₂ require positive numbers.
             </div>
             """,
             unsafe_allow_html=True,
@@ -1304,12 +1367,10 @@ with help_tab:
             """
             <div class="help-box">
                 <strong>5. Angle mode</strong><br>
-                Angle mode only affects trigonometric operations:
-                <strong>sin, cos, tan, csc, sec, and cot</strong>.<br><br>
-                Use <strong>Degrees</strong> for normal school angles:
+                Angle mode applies to sin, cos, tan, csc, sec, and cot.<br><br>
+                Use <strong>Degrees</strong> for normal geometry:
                 <code>sin(30°) = 0.5</code>.<br><br>
-                Use <strong>Radians</strong> for calculus, physics, and
-                programming values such as π/2:
+                Use <strong>Radians</strong> for calculus, physics, and programming:
                 <code>sin(1.570796...) = 1</code>.
             </div>
             """,
@@ -1320,11 +1381,11 @@ with help_tab:
             """
             <div class="help-box">
                 <strong>6. Memory buttons</strong><br>
-                • <strong>MC</strong>: Clears stored memory.<br>
-                • <strong>MR</strong>: Shows the stored memory value.<br>
-                • <strong>M+</strong>: Adds the current result to memory.<br>
-                • <strong>M−</strong>: Subtracts the current result from memory.<br><br>
-                Example: calculate <code>10 + 5</code>, click M+, then memory stores 15.
+                • <strong>MC</strong>: Clear memory<br>
+                • <strong>MR</strong>: Recall memory<br>
+                • <strong>M+</strong>: Add result to memory<br>
+                • <strong>M−</strong>: Subtract result from memory<br><br>
+                Example: calculate <code>10 + 5</code>, then click M+ to store 15.
             </div>
             """,
             unsafe_allow_html=True,
@@ -1333,11 +1394,10 @@ with help_tab:
     st.markdown(
         """
         <div class="help-box">
-            <strong>7. Constants, result display, and history</strong><br>
-            Use π, e, or φ buttons to insert common values into the expression input.
-            The calculator display shows the latest expression and result.
-            Every successful calculation is saved in History. You can download
-            History as a CSV file or clear it when needed.
+            <strong>7. Constants and history</strong><br>
+            Use π, e, or φ to insert standard mathematical constants into the
+            expression input. Every successful calculation is saved in History.
+            Download your session history as CSV when needed.
         </div>
         """,
         unsafe_allow_html=True,
@@ -1346,14 +1406,9 @@ with help_tab:
     st.markdown(
         """
         <div class="help-box">
-            <strong>8. Important calculation rules</strong><br>
-            • You cannot divide by zero.<br>
-            • Square root requires zero or a positive number.<br>
-            • Factorial requires a whole number greater than or equal to zero.<br>
-            • Tangent and secant are undefined where cosine equals zero,
-            such as 90°.<br>
-            • Cosecant and cotangent are undefined where sine equals zero,
-            such as 0°.
+            <strong>8. Safety checks</strong><br>
+            The calculator prevents division by zero, invalid logarithms, negative
+            square roots, invalid factorials, and undefined trig values.
         </div>
         """,
         unsafe_allow_html=True,
@@ -1365,10 +1420,9 @@ with shift_tab:
     st.markdown(
         """
         <div class="help-box">
-            <strong>Shift Mode gives selected buttons an alternate function.</strong><br>
-            First choose an operation. Then turn on <strong>⇧ SHIFT</strong>.
-            The calculator shows which alternate operation will run.
-            Click <strong>Calculate</strong> to use the shifted function.
+            <strong>Shift Mode activates alternate functions.</strong><br>
+            Select a normal function first. Turn on Shift Mode, confirm the
+            alternate operation shown by the calculator, then click Calculate.
         </div>
         """,
         unsafe_allow_html=True,
@@ -1380,14 +1434,11 @@ with shift_tab:
             <strong>Trigonometric Shift functions</strong><br>
             • sin → cos<br>
             • cos → tan<br>
-            • tan → cot, where <code>cot(x) = 1 / tan(x)</code><br>
-            • csc → sin<br>
-            • sec → cos<br>
-            • cot → sin<br><br>
-            Reciprocal trig functions available in the calculator:<br>
+            • tan → cot<br><br>
+            Reciprocal trig functions:<br>
             • <code>csc(x) = 1 / sin(x)</code><br>
             • <code>sec(x) = 1 / cos(x)</code><br>
-            • <code>cot(x) = 1 / tan(x) = cos(x) / sin(x)</code>
+            • <code>cot(x) = 1 / tan(x)</code>
         </div>
         """,
         unsafe_allow_html=True,
@@ -1397,49 +1448,41 @@ with shift_tab:
         """
         <div class="help-box">
             <strong>Other Shift mappings</strong><br>
-            • x² → x³<br>
-            • x³ → x²<br>
-            • √x → ∛x<br>
-            • ∛x → √x<br>
-            • ln → log₁₀<br>
-            • log₁₀ → log₂<br>
-            • log₂ → ln<br>
-            • ceil → floor<br>
-            • floor → ceil
+            • x² → x³ &nbsp; • √x → ∛x<br>
+            • ln → log₁₀ &nbsp; • log₁₀ → log₂<br>
+            • ceil → floor &nbsp; • floor → ceil
         </div>
         """,
         unsafe_allow_html=True,
     )
 
     st.info(
-        "Example: Select Sine (sin), set First Number to 30, choose Degrees, "
-        "turn Shift ON, and press Calculate. The calculator performs cos(30°), "
-        "which equals approximately 0.866025."
+        "Example: choose Sine (sin), enter 30, use Degrees, enable Shift, "
+        "then click Calculate. NovaCalc will calculate cos(30°)."
     )
 
-    st.warning(
-        "Shift Mode remains ON until you press the Shift button again or use Reset all. "
-        "Check the information message above the number inputs before calculating."
-    )
 
-with about_tab:
-    st.markdown(
-        """
-        <div class="about-card">
-            <h2>👨‍💻 Nisar Ahmad</h2>
-            <p>
-                AI/ML Developer and BS Computer Science student at
-                COMSATS University Islamabad, Sahiwal Campus.
-            </p>
-            <p>
-                NovaCalc demonstrates Python programming, Streamlit user-interface
-                design, mathematical functions, safe input processing, session-state
-                management, calculation history, memory operations, and CSV export.
-            </p>
+# ============================================================
+# NEW: PROMINENT DEVELOPER SECTION AT END OF FIRST PAGE
+# ============================================================
+st.markdown(
+    """
+    <div class="developer-spotlight">
+        <div class="developer-badge">Developed By</div>
+        <h2 class="developer-name">Nisar Ahmad</h2>
+        <div class="developer-role">AI/ML Developer • BS Computer Science Student</div>
+        <div class="cui-campus">
+            🎓 COMSATS University Islamabad<br>
+            Sahiwal Campus
         </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        <p class="developer-note">
+            Building practical AI-powered applications, modern web tools,
+            and interactive software solutions with Python and Streamlit.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 st.markdown(
     """
