@@ -354,14 +354,18 @@ st.markdown(
     }
 
     .developer-note {
-        position: relative;
-        z-index: 1;
-        max-width: 780px;
-        margin: 1rem auto 0;
-        color: rgba(255, 255, 255, 0.90);
-        font-size: 0.92rem;
-        line-height: 1.65;
-    }
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 1.15rem auto 0;
+    padding: 0.8rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.96);
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.65;
+    text-align: center;
+}
 
     .developer-spotlight:hover {
         transform: translateY(-2px);
@@ -1469,28 +1473,23 @@ st.markdown(
     """
     <div class="developer-spotlight">
         <div class="developer-badge">Developed By</div>
+
         <h2 class="developer-name">Nisar Ahmad</h2>
-        <div class="developer-role">AI/ML Developer • BS Computer Science Student</div>
+
+        <div class="developer-role">
+            AI/ML Developer • BS Computer Science Student
+        </div>
+
         <div class="cui-campus">
             🎓 COMSATS University Islamabad<br>
             Sahiwal Campus
         </div>
-        <p class="developer-note">
+
+        <div class="developer-note">
             Building practical AI-powered applications, modern web tools,
             and interactive software solutions with Python and Streamlit.
-        </p>
+        </div>
     </div>
     """,
     unsafe_allow_html=True,
 )
-
-st.markdown(
-    """
-    <div class="footer">
-        Built with Python and Streamlit • NovaCalc by Nisar Ahmad
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-st.markdown("</div>", unsafe_allow_html=True)
