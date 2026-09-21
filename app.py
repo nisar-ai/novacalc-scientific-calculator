@@ -268,7 +268,7 @@ st.markdown(
     }
 
     /* ========================================================
-       NEW: HIGH-CONTRAST DEVELOPER PROFILE AT PAGE BOTTOM
+       DEVELOPER PROFILE SECTION
        ======================================================== */
     .developer-spotlight {
         position: relative;
@@ -285,6 +285,7 @@ st.markdown(
             0 20px 48px rgba(0, 0, 0, 0.35),
             inset 0 1px 0 rgba(255, 255, 255, 0.14);
         text-align: center;
+        transition: all 0.25s ease;
     }
 
     .developer-spotlight::before {
@@ -297,6 +298,14 @@ st.markdown(
         font-weight: 800;
         line-height: 1;
         pointer-events: none;
+    }
+
+    .developer-spotlight:hover {
+        transform: translateY(-2px);
+        border-color: #67e8f9;
+        box-shadow:
+            0 25px 56px rgba(0, 0, 0, 0.42),
+            0 0 28px rgba(34, 211, 238, 0.18);
     }
 
     .developer-badge {
@@ -324,24 +333,26 @@ st.markdown(
         font-weight: 800;
         letter-spacing: -0.05em;
         line-height: 1.08;
+        text-align: center;
         text-shadow: 0 4px 20px rgba(0, 0, 0, 0.32);
     }
 
     .developer-role {
         position: relative;
         z-index: 1;
-        margin: 0.65rem 0 0;
+        margin: 0.65rem auto 0;
         color: #a5f3fc;
         font-size: clamp(1rem, 2vw, 1.2rem);
         font-weight: 700;
         letter-spacing: 0.02em;
+        text-align: center;
     }
 
     .cui-campus {
         position: relative;
         z-index: 1;
         display: inline-block;
-        margin-top: 1rem;
+        margin: 1rem auto 0;
         padding: 0.8rem 1.15rem;
         border: 1px solid rgba(250, 204, 21, 0.60);
         border-radius: 13px;
@@ -350,30 +361,22 @@ st.markdown(
         font-size: clamp(1rem, 2vw, 1.22rem);
         font-weight: 800;
         line-height: 1.45;
+        text-align: center;
         box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
     }
 
     .developer-note {
-    position: relative;
-    z-index: 1;
-    max-width: 680px;
-    margin: 1.15rem auto 0;
-    padding: 0.8rem 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.22);
-    color: rgba(255, 255, 255, 0.96);
-    font-size: 0.98rem;
-    font-weight: 500;
-    line-height: 1.65;
-    text-align: center;
-}
-
-    .developer-spotlight:hover {
-        transform: translateY(-2px);
-        border-color: #67e8f9;
-        box-shadow:
-            0 25px 56px rgba(0, 0, 0, 0.42),
-            0 0 28px rgba(34, 211, 238, 0.18);
-        transition: all 0.25s ease;
+        position: relative;
+        z-index: 1;
+        max-width: 680px;
+        margin: 1.15rem auto 0;
+        padding: 0.8rem 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.22);
+        color: rgba(255, 255, 255, 0.96);
+        font-size: 0.98rem;
+        font-weight: 500;
+        line-height: 1.65;
+        text-align: center;
     }
 
     .footer {
@@ -512,6 +515,11 @@ st.markdown(
         .cui-campus {
             width: 100%;
             box-sizing: border-box;
+        }
+
+        .developer-note {
+            padding-left: 0.4rem;
+            padding-right: 0.4rem;
         }
     }
     </style>
@@ -1113,7 +1121,6 @@ with left_column:
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # MEMORY CARD
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(
         '<div class="card-title">🧠 Calculator memory</div>',
@@ -1467,7 +1474,7 @@ with shift_tab:
 
 
 # ============================================================
-# NEW: PROMINENT DEVELOPER SECTION AT END OF FIRST PAGE
+# DEVELOPER SECTION
 # ============================================================
 st.markdown(
     """
@@ -1493,3 +1500,14 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+st.markdown(
+    """
+    <div class="footer">
+        Built with Python and Streamlit • NovaCalc by Nisar Ahmad
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.markdown("</div>", unsafe_allow_html=True)
