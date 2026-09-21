@@ -38,8 +38,6 @@ st.markdown(
         --blue: #38bdf8;
         --green: #34d399;
         --yellow: #facc15;
-        --orange: #fb923c;
-        --pink: #fb7185;
         --white: #f8fafc;
         --muted: #a9bad0;
     }
@@ -155,7 +153,6 @@ st.markdown(
         color: #fde68a;
         font-size: 0.78rem;
         font-weight: 800;
-        letter-spacing: 0.03em;
     }
 
     .shift-inactive {
@@ -168,7 +165,6 @@ st.markdown(
         color: #cbd5e1;
         font-size: 0.78rem;
         font-weight: 800;
-        letter-spacing: 0.03em;
     }
 
     .shift-map {
@@ -187,8 +183,7 @@ st.markdown(
         padding: 1.15rem;
         border: 1px solid rgba(34, 211, 238, 0.36);
         border-radius: 18px;
-        background:
-            linear-gradient(145deg, rgba(6, 22, 39, 0.98), rgba(10, 31, 53, 0.98));
+        background: linear-gradient(145deg, rgba(6, 22, 39, 0.98), rgba(10, 31, 53, 0.98));
         box-shadow: inset 0 0 25px rgba(34, 211, 238, 0.05);
     }
 
@@ -267,9 +262,7 @@ st.markdown(
         color: #67e8f9;
     }
 
-    /* ========================================================
-       DEVELOPER PROFILE SECTION
-       ======================================================== */
+    /* Developer profile */
     .developer-spotlight {
         position: relative;
         overflow: hidden;
@@ -389,8 +382,7 @@ st.markdown(
     .stTextInput label,
     .stNumberInput label,
     .stSelectbox label,
-    .stRadio label,
-    .stCheckbox label {
+    .stRadio label {
         color: #dbeafe !important;
         font-weight: 700 !important;
     }
@@ -547,7 +539,7 @@ for key, value in DEFAULT_STATE.items():
 
 
 # ============================================================
-# OPERATION LISTS AND SHIFT MAPPING
+# OPERATIONS AND SHIFT MAPPING
 # ============================================================
 NORMAL_OPERATIONS = [
     "Addition (+)",
@@ -626,9 +618,7 @@ def safe_eval_expression(expression):
     if len(expression) > 160:
         raise ValueError("Expression is too long.")
 
-    allowed_characters = re.compile(r"^[0-9eE+\-*/%().\s]+$")
-
-    if not allowed_characters.match(expression):
+    if not re.fullmatch(r"[0-9eE+\-*/%().\s]+", expression):
         raise ValueError(
             "Use only numbers, parentheses, +, -, *, /, %, or ^."
         )
@@ -682,7 +672,7 @@ def safe_eval_expression(expression):
 
 
 # ============================================================
-# CALCULATOR HELPERS
+# CALCULATOR FUNCTIONS
 # ============================================================
 def format_number(value, decimals=10):
     if value is None:
@@ -844,16 +834,13 @@ def calculate_operation(num1, num2, operation, angle_mode):
 
 
 def add_history(expression, result):
-    timestamp = datetime.now().strftime("%H:%M:%S")
-
     st.session_state.history.append(
         {
-            "time": timestamp,
+            "time": datetime.now().strftime("%H:%M:%S"),
             "expression": expression,
             "result": float(result),
         }
     )
-
     st.session_state.history = st.session_state.history[-50:]
 
 
@@ -924,17 +911,12 @@ with header_right:
 
 
 # ============================================================
-# MAIN LAYOUT
+# MAIN CALCULATOR
 # ============================================================
 left_column, right_column = st.columns([1.18, 0.82], gap="large")
 
-
-# ============================================================
-# LEFT SIDE: INPUTS AND OPERATIONS
-# ============================================================
 with left_column:
     st.markdown('<div class="card">', unsafe_allow_html=True)
-
     st.markdown(
         '<div class="card-title">⌨️ Quick expression</div>',
         unsafe_allow_html=True,
@@ -1035,12 +1017,9 @@ with left_column:
         st.session_state.angle_mode = angle_mode
 
     with settings_col2:
-        operation_index = 0
-
-        if st.session_state.last_operation in NORMAL_OPERATIONS:
-            operation_index = NORMAL_OPERATIONS.index(
-                st.session_state.last_operation
-            )
+        operation_index = NORMAL_OPERATIONS.index(
+            st.session_state.last_operation
+        )
 
         selected_operation = st.selectbox(
             "Choose operation",
@@ -1121,6 +1100,7 @@ with left_column:
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
+    # Memory
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(
         '<div class="card-title">🧠 Calculator memory</div>',
@@ -1169,10 +1149,8 @@ with left_column:
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-# ============================================================
-# RIGHT SIDE: DISPLAY AND QUICK TOOLS
-# ============================================================
 with right_column:
+    # Result display
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(
         '<div class="card-title">📟 Calculator display</div>',
@@ -1222,6 +1200,7 @@ with right_column:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
+    # Constants
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(
         '<div class="card-title">📚 Constants and tools</div>',
@@ -1331,10 +1310,11 @@ with help_tab:
         """
         <div class="help-box">
             <strong>2. Scientific Operations</strong><br>
-            Choose an operation, enter the first number, and click
+            Select an operation, enter the first number, and click
             <strong>Calculate</strong>. Two-number operations include addition,
-            subtraction, multiplication, division, modulus, and power. One-number
-            operations include roots, factorial, trigonometry, and logarithms.
+            subtraction, multiplication, division, modulus, and power.
+            One-number operations include roots, factorial, trigonometry,
+            and logarithms.
         </div>
         """,
         unsafe_allow_html=True,
@@ -1381,8 +1361,8 @@ with help_tab:
                 Angle mode applies to sin, cos, tan, csc, sec, and cot.<br><br>
                 Use <strong>Degrees</strong> for normal geometry:
                 <code>sin(30°) = 0.5</code>.<br><br>
-                Use <strong>Radians</strong> for calculus, physics, and programming:
-                <code>sin(1.570796...) = 1</code>.
+                Use <strong>Radians</strong> for calculus, physics,
+                and programming: <code>sin(1.570796...) = 1</code>.
             </div>
             """,
             unsafe_allow_html=True,
@@ -1406,20 +1386,9 @@ with help_tab:
         """
         <div class="help-box">
             <strong>7. Constants and history</strong><br>
-            Use π, e, or φ to insert standard mathematical constants into the
-            expression input. Every successful calculation is saved in History.
-            Download your session history as CSV when needed.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
-        <div class="help-box">
-            <strong>8. Safety checks</strong><br>
-            The calculator prevents division by zero, invalid logarithms, negative
-            square roots, invalid factorials, and undefined trig values.
+            Use π, e, or φ to insert standard constants into the expression input.
+            Every successful calculation is saved in History. Download your
+            session history as a CSV file when needed.
         </div>
         """,
         unsafe_allow_html=True,
@@ -1446,7 +1415,7 @@ with shift_tab:
             • sin → cos<br>
             • cos → tan<br>
             • tan → cot<br><br>
-            Reciprocal trig functions:<br>
+            Reciprocal trigonometric functions:<br>
             • <code>csc(x) = 1 / sin(x)</code><br>
             • <code>sec(x) = 1 / cos(x)</code><br>
             • <code>cot(x) = 1 / tan(x)</code>
@@ -1455,20 +1424,8 @@ with shift_tab:
         unsafe_allow_html=True,
     )
 
-    st.markdown(
-        """
-        <div class="help-box">
-            <strong>Other Shift mappings</strong><br>
-            • x² → x³ &nbsp; • √x → ∛x<br>
-            • ln → log₁₀ &nbsp; • log₁₀ → log₂<br>
-            • ceil → floor &nbsp; • floor → ceil
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
     st.info(
-        "Example: choose Sine (sin), enter 30, use Degrees, enable Shift, "
+        "Example: choose Sine (sin), enter 30, select Degrees, enable Shift, "
         "then click Calculate. NovaCalc will calculate cos(30°)."
     )
 
@@ -1476,31 +1433,34 @@ with shift_tab:
 # ============================================================
 # DEVELOPER SECTION
 # ============================================================
-st.markdown(
-    """
-    <div class="developer-spotlight">
-        <div class="developer-badge">Developed By</div>
+developer_html = """
+<div class="developer-spotlight">
+    <div class="developer-badge">Developed By</div>
 
-        <h2 class="developer-name">Nisar Ahmad</h2>
+    <h2 class="developer-name">Nisar Ahmad</h2>
 
-        <div class="developer-role">
-            AI/ML Developer • BS Computer Science Student
-        </div>
-
-        <div class="cui-campus">
-            🎓 COMSATS University Islamabad<br>
-            Sahiwal Campus
-        </div>
-
-        <div class="developer-note">
-            Building practical AI-powered applications, modern web tools,
-            and interactive software solutions with Python and Streamlit.
-        </div>
+    <div class="developer-role">
+        AI/ML Developer • BS Computer Science Student
     </div>
-    """,
-    unsafe_allow_html=True,
-)
 
+    <div class="cui-campus">
+        🎓 COMSATS University Islamabad<br>
+        Sahiwal Campus
+    </div>
+
+    <div class="developer-note">
+        Building practical AI-powered applications, modern web tools,
+        and interactive software solutions with Python and Streamlit.
+    </div>
+</div>
+"""
+
+st.markdown(developer_html, unsafe_allow_html=True)
+
+
+# ============================================================
+# FOOTER
+# ============================================================
 st.markdown(
     """
     <div class="footer">
