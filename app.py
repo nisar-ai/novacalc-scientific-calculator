@@ -22,7 +22,7 @@ st.set_page_config(
 
 
 # ============================================================
-# HIGH-CONTRAST UI
+# CUSTOM CSS
 # ============================================================
 st.markdown(
     """
@@ -32,7 +32,6 @@ st.markdown(
     :root {
         --bg-dark: #07111f;
         --panel: #0d1b2e;
-        --panel-light: #132742;
         --line: #294565;
         --cyan: #22d3ee;
         --blue: #38bdf8;
@@ -44,6 +43,7 @@ st.markdown(
 
     * {
         font-family: "Inter", sans-serif;
+        box-sizing: border-box;
     }
 
     .stApp {
@@ -83,20 +83,7 @@ st.markdown(
         box-shadow: 0 18px 35px rgba(8, 145, 178, 0.22);
     }
 
-    .hero::after {
-        content: "∑  √  π  ∫  Δ";
-        position: absolute;
-        right: 1rem;
-        bottom: 0.4rem;
-        color: rgba(255, 255, 255, 0.12);
-        font-size: 2.2rem;
-        font-weight: 800;
-        letter-spacing: 0.45rem;
-    }
-
     .hero h1 {
-        position: relative;
-        z-index: 1;
         margin: 0;
         color: white;
         font-size: clamp(2rem, 5vw, 3.25rem);
@@ -105,8 +92,6 @@ st.markdown(
     }
 
     .hero p {
-        position: relative;
-        z-index: 1;
         margin: 0.55rem 0 0;
         color: rgba(255, 255, 255, 0.90);
         font-size: 0.98rem;
@@ -120,6 +105,7 @@ st.markdown(
         border-radius: 20px;
         background: linear-gradient(145deg, #0d1b2e, #0a1728);
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        overflow: hidden;
     }
 
     .card-title {
@@ -143,28 +129,26 @@ st.markdown(
         font-weight: 700;
     }
 
-    .shift-active {
-        display: inline-block;
-        margin-left: 0.45rem;
-        padding: 0.35rem 0.65rem;
-        border: 1px solid rgba(250, 204, 21, 0.60);
-        border-radius: 999px;
-        background: rgba(250, 204, 21, 0.14);
-        color: #fde68a;
-        font-size: 0.78rem;
-        font-weight: 800;
-    }
-
+    .shift-active,
     .shift-inactive {
         display: inline-block;
         margin-left: 0.45rem;
         padding: 0.35rem 0.65rem;
-        border: 1px solid rgba(148, 163, 184, 0.35);
         border-radius: 999px;
-        background: rgba(148, 163, 184, 0.08);
-        color: #cbd5e1;
         font-size: 0.78rem;
         font-weight: 800;
+    }
+
+    .shift-active {
+        border: 1px solid rgba(250, 204, 21, 0.60);
+        background: rgba(250, 204, 21, 0.14);
+        color: #fde68a;
+    }
+
+    .shift-inactive {
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        background: rgba(148, 163, 184, 0.08);
+        color: #cbd5e1;
     }
 
     .shift-map {
@@ -176,6 +160,7 @@ st.markdown(
         color: #fef3c7;
         font-size: 0.84rem;
         line-height: 1.55;
+        overflow-wrap: anywhere;
     }
 
     .display-card {
@@ -185,6 +170,7 @@ st.markdown(
         border-radius: 18px;
         background: linear-gradient(145deg, rgba(6, 22, 39, 0.98), rgba(10, 31, 53, 0.98));
         box-shadow: inset 0 0 25px rgba(34, 211, 238, 0.05);
+        overflow: hidden;
     }
 
     .display-label {
@@ -202,6 +188,7 @@ st.markdown(
         font-family: "JetBrains Mono", monospace;
         font-size: 0.95rem;
         overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .display-result {
@@ -211,6 +198,7 @@ st.markdown(
         font-size: clamp(1.8rem, 4vw, 2.65rem);
         font-weight: 700;
         overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .metric-box {
@@ -218,6 +206,7 @@ st.markdown(
         border: 1px solid #294565;
         border-radius: 13px;
         background: rgba(19, 39, 66, 0.72);
+        overflow: hidden;
     }
 
     .metric-label {
@@ -234,6 +223,7 @@ st.markdown(
         font-size: 1rem;
         font-weight: 700;
         overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .history-row {
@@ -246,130 +236,7 @@ st.markdown(
         font-family: "JetBrains Mono", monospace;
         font-size: 0.84rem;
         overflow-wrap: anywhere;
-    }
-
-    .help-box {
-        margin: 0.65rem 0;
-        padding: 0.95rem;
-        border: 1px solid #294565;
-        border-radius: 12px;
-        background: rgba(19, 39, 66, 0.68);
-        color: #dbeafe;
-        line-height: 1.65;
-    }
-
-    .help-box strong {
-        color: #67e8f9;
-    }
-
-    /* Developer profile */
-    .developer-spotlight {
-        position: relative;
-        overflow: hidden;
-        margin-top: 1.35rem;
-        padding: 2rem 1.5rem;
-        border: 2px solid rgba(34, 211, 238, 0.72);
-        border-radius: 22px;
-        background:
-            radial-gradient(circle at 12% 15%, rgba(34, 211, 238, 0.30), transparent 34%),
-            radial-gradient(circle at 88% 80%, rgba(168, 85, 247, 0.34), transparent 35%),
-            linear-gradient(135deg, #0f172a 0%, #172554 52%, #0e7490 100%);
-        box-shadow:
-            0 20px 48px rgba(0, 0, 0, 0.35),
-            inset 0 1px 0 rgba(255, 255, 255, 0.14);
-        text-align: center;
-        transition: all 0.25s ease;
-    }
-
-    .developer-spotlight::before {
-        content: "N";
-        position: absolute;
-        left: 3%;
-        top: -1.6rem;
-        color: rgba(255, 255, 255, 0.07);
-        font-size: 12rem;
-        font-weight: 800;
-        line-height: 1;
-        pointer-events: none;
-    }
-
-    .developer-spotlight:hover {
-        transform: translateY(-2px);
-        border-color: #67e8f9;
-        box-shadow:
-            0 25px 56px rgba(0, 0, 0, 0.42),
-            0 0 28px rgba(34, 211, 238, 0.18);
-    }
-
-    .developer-badge {
-        position: relative;
-        z-index: 1;
-        display: inline-block;
-        margin-bottom: 0.75rem;
-        padding: 0.38rem 0.85rem;
-        border: 1px solid rgba(255, 255, 255, 0.30);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.12);
-        color: #cffafe;
-        font-size: 0.76rem;
-        font-weight: 800;
-        letter-spacing: 0.10em;
-        text-transform: uppercase;
-    }
-
-    .developer-name {
-        position: relative;
-        z-index: 1;
-        margin: 0;
-        color: #ffffff;
-        font-size: clamp(2rem, 5vw, 3.6rem);
-        font-weight: 800;
-        letter-spacing: -0.05em;
-        line-height: 1.08;
-        text-align: center;
-        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.32);
-    }
-
-    .developer-role {
-        position: relative;
-        z-index: 1;
-        margin: 0.65rem auto 0;
-        color: #a5f3fc;
-        font-size: clamp(1rem, 2vw, 1.2rem);
-        font-weight: 700;
-        letter-spacing: 0.02em;
-        text-align: center;
-    }
-
-    .cui-campus {
-        position: relative;
-        z-index: 1;
-        display: inline-block;
-        margin: 1rem auto 0;
-        padding: 0.8rem 1.15rem;
-        border: 1px solid rgba(250, 204, 21, 0.60);
-        border-radius: 13px;
-        background: rgba(250, 204, 21, 0.15);
-        color: #fef3c7;
-        font-size: clamp(1rem, 2vw, 1.22rem);
-        font-weight: 800;
-        line-height: 1.45;
-        text-align: center;
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
-    }
-
-    .developer-note {
-        position: relative;
-        z-index: 1;
-        max-width: 680px;
-        margin: 1.15rem auto 0;
-        padding: 0.8rem 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.22);
-        color: rgba(255, 255, 255, 0.96);
-        font-size: 0.98rem;
-        font-weight: 500;
-        line-height: 1.65;
-        text-align: center;
+        word-break: break-word;
     }
 
     .footer {
@@ -379,6 +246,7 @@ st.markdown(
         text-align: center;
     }
 
+    /* Streamlit inputs */
     .stTextInput label,
     .stNumberInput label,
     .stSelectbox label,
@@ -425,34 +293,50 @@ st.markdown(
         background: #153454 !important;
     }
 
+    /* All buttons: explicit dark background prevents white buttons on mobile */
     .stButton > button,
     .stDownloadButton > button {
-        min-height: 43px;
+        width: 100% !important;
+        min-height: 44px !important;
+        padding: 0.45rem 0.65rem !important;
         border: 1px solid #3b6b8e !important;
         border-radius: 11px !important;
         background: #122943 !important;
         color: #eff6ff !important;
         font-weight: 800 !important;
+        font-size: 0.90rem !important;
+        box-shadow: none !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+    }
+
+    .stButton > button *,
+    .stDownloadButton > button * {
+        color: #eff6ff !important;
     }
 
     .stButton > button:hover,
-    .stDownloadButton > button:hover {
+    .stButton > button:focus,
+    .stButton > button:active,
+    .stDownloadButton > button:hover,
+    .stDownloadButton > button:focus,
+    .stDownloadButton > button:active {
         border-color: var(--cyan) !important;
         background: #164567 !important;
-        color: white !important;
+        color: #ffffff !important;
     }
 
     .primary-button .stButton > button {
         border: none !important;
         background: linear-gradient(135deg, #06b6d4, #2563eb) !important;
-        box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28);
+        box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28) !important;
     }
 
     .shift-button .stButton > button {
         border: 1px solid rgba(250, 204, 21, 0.75) !important;
         background: linear-gradient(135deg, #b45309, #f59e0b) !important;
         color: #fffbeb !important;
-        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.22);
+        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.22) !important;
     }
 
     .danger-button .stButton > button {
@@ -460,11 +344,30 @@ st.markdown(
         color: #fecdd3 !important;
     }
 
+    /* Memory buttons always remain dark and readable */
+    .memory-button .stButton > button {
+        min-height: 48px !important;
+        background: linear-gradient(135deg, #12345a, #0f2746) !important;
+        color: #ffffff !important;
+        border: 1px solid #38bdf8 !important;
+        font-size: 0.86rem !important;
+        font-weight: 800 !important;
+    }
+
+    .memory-button .stButton > button:hover,
+    .memory-button .stButton > button:focus,
+    .memory-button .stButton > button:active {
+        background: linear-gradient(135deg, #155e75, #1d4ed8) !important;
+        color: #ffffff !important;
+        border-color: #67e8f9 !important;
+    }
+
     .stTabs [data-baseweb="tab-list"] {
         gap: 0.3rem;
         background: #081525;
         border-radius: 12px;
         padding: 0.25rem;
+        flex-wrap: wrap;
     }
 
     .stTabs [data-baseweb="tab"] {
@@ -478,12 +381,48 @@ st.markdown(
         border-radius: 9px;
     }
 
-    .stAlert {
-        border-radius: 11px !important;
+    /* Developer profile */
+    .developer-title {
+        color: #ffffff !important;
+        font-size: clamp(2rem, 5vw, 3.6rem) !important;
+        font-weight: 800 !important;
+        text-align: center !important;
+        margin-bottom: 0.25rem !important;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.32);
     }
 
-    .stCaption {
-        color: #9fb4cc !important;
+    .developer-role-text {
+        color: #a5f3fc !important;
+        font-size: 1.15rem !important;
+        font-weight: 700 !important;
+        text-align: center !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .developer-campus {
+        color: #fef3c7 !important;
+        font-size: 1.15rem !important;
+        font-weight: 800 !important;
+        text-align: center !important;
+        padding: 0.85rem !important;
+        border: 1px solid rgba(250, 204, 21, 0.60);
+        border-radius: 13px;
+        background: rgba(250, 204, 21, 0.15);
+        line-height: 1.55;
+    }
+
+    .developer-note-text {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 1rem auto 0 !important;
+        padding-top: 0.9rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.22);
+        color: rgba(255, 255, 255, 0.96) !important;
+        font-size: 0.90rem !important;
+        font-weight: 500 !important;
+        line-height: 1.45 !important;
+        text-align: center !important;
+        white-space: nowrap !important;
     }
 
     @media (max-width: 760px) {
@@ -500,18 +439,46 @@ st.markdown(
             padding: 1.2rem 0.8rem;
         }
 
-        .developer-spotlight {
-            padding: 1.5rem 0.9rem;
+        .hero h1 {
+            font-size: 2rem;
         }
 
-        .cui-campus {
-            width: 100%;
-            box-sizing: border-box;
+        .hero p {
+            font-size: 0.88rem;
         }
 
-        .developer-note {
-            padding-left: 0.4rem;
-            padding-right: 0.4rem;
+        .card {
+            padding: 0.85rem;
+            border-radius: 16px;
+        }
+
+        .stButton > button,
+        .stDownloadButton > button {
+            min-height: 46px !important;
+            padding: 0.45rem 0.35rem !important;
+            font-size: 0.80rem !important;
+        }
+
+        .memory-button .stButton > button {
+            min-height: 50px !important;
+            font-size: 0.78rem !important;
+        }
+
+        .developer-role-text {
+            font-size: 0.98rem !important;
+        }
+
+        .developer-campus {
+            font-size: 1rem !important;
+        }
+
+        /* On phone: wrap naturally so the long statement never overflows */
+        .developer-note-text {
+            white-space: normal !important;
+            font-size: 0.82rem !important;
+            line-height: 1.55 !important;
+            overflow-wrap: break-word !important;
+            word-break: normal !important;
         }
     }
     </style>
@@ -586,12 +553,12 @@ SHIFT_OPERATION_MAP = {
     "Secant (sec)": "Cosine (cos)",
     "Cotangent (cot)": "Sine (sin)",
     "Ceiling ⌈x⌉": "Floor ⌊x⌋",
-    "Floor ⌊x⌋": "Ceiling ⌈x⌉",
+    "Floor ⌊x⌉": "Ceiling ⌈x⌉",
 }
 
 
 # ============================================================
-# SAFE EXPRESSION EVALUATION
+# SAFE EXPRESSION EVALUATOR
 # ============================================================
 BINARY_OPERATORS = {
     ast.Add: operator.add,
@@ -672,7 +639,7 @@ def safe_eval_expression(expression):
 
 
 # ============================================================
-# CALCULATOR FUNCTIONS
+# CALCULATOR HELPERS
 # ============================================================
 def format_number(value, decimals=10):
     if value is None:
@@ -917,6 +884,7 @@ left_column, right_column = st.columns([1.18, 0.82], gap="large")
 
 with left_column:
     st.markdown('<div class="card">', unsafe_allow_html=True)
+
     st.markdown(
         '<div class="card-title">⌨️ Quick expression</div>',
         unsafe_allow_html=True,
@@ -1100,41 +1068,77 @@ with left_column:
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # Memory
+    # ========================================================
+    # MEMORY SECTION — RESPONSIVE 2 × 2 GRID
+    # ========================================================
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(
         '<div class="card-title">🧠 Calculator memory</div>',
         unsafe_allow_html=True,
     )
 
-    memory_col1, memory_col2, memory_col3, memory_col4 = st.columns(4)
+    memory_col1, memory_col2 = st.columns(2)
 
     with memory_col1:
-        if st.button("MC", help="Memory Clear", use_container_width=True):
+        st.markdown('<div class="memory-button">', unsafe_allow_html=True)
+
+        if st.button(
+            "MC — Clear",
+            help="Memory Clear",
+            use_container_width=True,
+        ):
             st.session_state.memory = 0.0
             st.toast("Memory cleared.")
 
+        st.markdown("</div>", unsafe_allow_html=True)
+
     with memory_col2:
-        if st.button("MR", help="Memory Recall", use_container_width=True):
+        st.markdown('<div class="memory-button">', unsafe_allow_html=True)
+
+        if st.button(
+            "MR — Recall",
+            help="Memory Recall",
+            use_container_width=True,
+        ):
             st.session_state.result = st.session_state.memory
             st.session_state.expression = "Memory recall (MR)"
             st.toast("Memory recalled to display.")
 
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    memory_col3, memory_col4 = st.columns(2)
+
     with memory_col3:
-        if st.button("M+", help="Add current result to memory", use_container_width=True):
+        st.markdown('<div class="memory-button">', unsafe_allow_html=True)
+
+        if st.button(
+            "M+ — Add",
+            help="Add current result to memory",
+            use_container_width=True,
+        ):
             if st.session_state.result is None:
                 st.warning("Calculate a result first.")
             else:
                 st.session_state.memory += st.session_state.result
                 st.toast("Current result added to memory.")
 
+        st.markdown("</div>", unsafe_allow_html=True)
+
     with memory_col4:
-        if st.button("M−", help="Subtract current result from memory", use_container_width=True):
+        st.markdown('<div class="memory-button">', unsafe_allow_html=True)
+
+        if st.button(
+            "M− — Subtract",
+            help="Subtract current result from memory",
+            use_container_width=True,
+        ):
             if st.session_state.result is None:
                 st.warning("Calculate a result first.")
             else:
                 st.session_state.memory -= st.session_state.result
                 st.toast("Current result subtracted from memory.")
+
+        st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown(
         f"""
@@ -1200,7 +1204,7 @@ with right_column:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # Constants
+    # Constants and tools
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(
         '<div class="card-title">📚 Constants and tools</div>',
@@ -1292,170 +1296,123 @@ help_tab, shift_tab = st.tabs(
 with help_tab:
     st.markdown("## How to use NovaCalc")
 
-    st.markdown(
-        """
-        <div class="help-box">
-            <strong>1. Quick Expression</strong><br>
-            Type a complete expression using numbers, parentheses, and operators:
-            <strong>+</strong>, <strong>-</strong>, <strong>*</strong>,
-            <strong>/</strong>, <strong>%</strong>, and <strong>^</strong>.<br><br>
-            Examples: <code>(25 + 5) * 3</code>,
-            <code>2^8</code>, <code>(100 / 4) + 7.5</code>.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
-        <div class="help-box">
-            <strong>2. Scientific Operations</strong><br>
-            Select an operation, enter the first number, and click
-            <strong>Calculate</strong>. Two-number operations include addition,
-            subtraction, multiplication, division, modulus, and power.
-            One-number operations include roots, factorial, trigonometry,
-            and logarithms.
-        </div>
-        """,
-        unsafe_allow_html=True,
+    st.info(
+        "Use Quick Expression for calculations such as `(25 + 5) * 3` or `2^8`. "
+        "Use Scientific Operations when you need functions such as square root, "
+        "factorial, logarithms, trigonometry, or powers."
     )
 
     help_col1, help_col2 = st.columns(2)
 
     with help_col1:
-        st.markdown(
-            """
-            <div class="help-box">
-                <strong>3. Basic operations</strong><br>
-                • Addition: <code>5 + 3 = 8</code><br>
-                • Subtraction: <code>5 - 3 = 2</code><br>
-                • Multiplication: <code>5 × 3 = 15</code><br>
-                • Division: <code>10 ÷ 2 = 5</code><br>
-                • Modulus: <code>10 % 3 = 1</code><br>
-                • Power: <code>2^5 = 32</code>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.markdown("### Basic operations")
+        st.write("• Addition: `5 + 3 = 8`")
+        st.write("• Subtraction: `5 - 3 = 2`")
+        st.write("• Multiplication: `5 × 3 = 15`")
+        st.write("• Division: `10 ÷ 2 = 5`")
+        st.write("• Modulus: `10 % 3 = 1`")
+        st.write("• Power: `2^5 = 32`")
 
-        st.markdown(
-            """
-            <div class="help-box">
-                <strong>4. Roots, powers, and logs</strong><br>
-                • Square: <code>5² = 25</code><br>
-                • Cube: <code>3³ = 27</code><br>
-                • Square root: <code>√81 = 9</code><br>
-                • Cube root: <code>∛27 = 3</code><br>
-                • Inverse: <code>1/4 = 0.25</code><br>
-                • ln, log₁₀, and log₂ require positive numbers.
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.markdown("### Scientific functions")
+        st.write("• Square: `5² = 25`")
+        st.write("• Cube: `3³ = 27`")
+        st.write("• Square root: `√81 = 9`")
+        st.write("• Cube root: `∛27 = 3`")
+        st.write("• Factorial: `5! = 120`")
+        st.write("• Logarithms require positive numbers.")
 
     with help_col2:
-        st.markdown(
-            """
-            <div class="help-box">
-                <strong>5. Angle mode</strong><br>
-                Angle mode applies to sin, cos, tan, csc, sec, and cot.<br><br>
-                Use <strong>Degrees</strong> for normal geometry:
-                <code>sin(30°) = 0.5</code>.<br><br>
-                Use <strong>Radians</strong> for calculus, physics,
-                and programming: <code>sin(1.570796...) = 1</code>.
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.markdown("### Angle mode")
+        st.write("Choose **Degrees** for common geometry angles.")
+        st.write("Example: `sin(30°) = 0.5`")
+        st.write("Choose **Radians** for calculus and programming.")
+        st.write("Example: `sin(1.570796...) = 1`")
 
-        st.markdown(
-            """
-            <div class="help-box">
-                <strong>6. Memory buttons</strong><br>
-                • <strong>MC</strong>: Clear memory<br>
-                • <strong>MR</strong>: Recall memory<br>
-                • <strong>M+</strong>: Add result to memory<br>
-                • <strong>M−</strong>: Subtract result from memory<br><br>
-                Example: calculate <code>10 + 5</code>, then click M+ to store 15.
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.markdown("### Memory buttons")
+        st.write("• **MC** clears memory")
+        st.write("• **MR** recalls memory")
+        st.write("• **M+** adds the current result to memory")
+        st.write("• **M−** subtracts the current result from memory")
 
-    st.markdown(
-        """
-        <div class="help-box">
-            <strong>7. Constants and history</strong><br>
-            Use π, e, or φ to insert standard constants into the expression input.
-            Every successful calculation is saved in History. Download your
-            session history as a CSV file when needed.
-        </div>
-        """,
-        unsafe_allow_html=True,
+    st.markdown("### Constants and history")
+    st.write(
+        "Use π, e, or φ to insert mathematical constants. Every successful "
+        "calculation appears in History and can be downloaded as a CSV file."
     )
 
 with shift_tab:
     st.markdown("## ⇧ How Shift Mode works")
 
-    st.markdown(
-        """
-        <div class="help-box">
-            <strong>Shift Mode activates alternate functions.</strong><br>
-            Select a normal function first. Turn on Shift Mode, confirm the
-            alternate operation shown by the calculator, then click Calculate.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        """
-        <div class="help-box">
-            <strong>Trigonometric Shift functions</strong><br>
-            • sin → cos<br>
-            • cos → tan<br>
-            • tan → cot<br><br>
-            Reciprocal trigonometric functions:<br>
-            • <code>csc(x) = 1 / sin(x)</code><br>
-            • <code>sec(x) = 1 / cos(x)</code><br>
-            • <code>cot(x) = 1 / tan(x)</code>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
     st.info(
-        "Example: choose Sine (sin), enter 30, select Degrees, enable Shift, "
-        "then click Calculate. NovaCalc will calculate cos(30°)."
+        "Shift Mode changes some selected operations into alternate operations. "
+        "Select a function, turn Shift ON, check the shown alternate function, "
+        "and then click Calculate."
+    )
+
+    shift_help_col1, shift_help_col2 = st.columns(2)
+
+    with shift_help_col1:
+        st.markdown("### Trigonometric mapping")
+        st.write("• `sin → cos`")
+        st.write("• `cos → tan`")
+        st.write("• `tan → cot`")
+        st.write("• `cot(x) = 1 / tan(x)`")
+        st.write("• `sec(x) = 1 / cos(x)`")
+        st.write("• `csc(x) = 1 / sin(x)`")
+
+    with shift_help_col2:
+        st.markdown("### Other Shift mappings")
+        st.write("• `x² → x³`")
+        st.write("• `√x → ∛x`")
+        st.write("• `ln → log₁₀`")
+        st.write("• `log₁₀ → log₂`")
+        st.write("• `ceil → floor`")
+        st.write("• `floor → ceil`")
+
+    st.warning(
+        "Shift Mode remains active until you turn it off or press Reset all."
     )
 
 
 # ============================================================
 # DEVELOPER SECTION
 # ============================================================
-developer_html = """
-<div class="developer-spotlight">
-    <div class="developer-badge">Developed By</div>
+developer_container = st.container(border=True)
 
-    <h2 class="developer-name">Nisar Ahmad</h2>
+with developer_container:
+    st.markdown(
+        "<p style='text-align:center; color:#cffafe; font-weight:800; "
+        "letter-spacing:0.10em; margin-bottom:0.4rem;'>DEVELOPED BY</p>",
+        unsafe_allow_html=True,
+    )
 
-    <div class="developer-role">
-        AI/ML Developer • BS Computer Science Student
-    </div>
+    st.markdown(
+        "<h2 class='developer-title'>Nisar Ahmad</h2>",
+        unsafe_allow_html=True,
+    )
 
-    <div class="cui-campus">
-        🎓 COMSATS University Islamabad<br>
-        Sahiwal Campus
-    </div>
+    st.markdown(
+        "<p class='developer-role-text'>"
+        "AI/ML Developer • BS Computer Science Student"
+        "</p>",
+        unsafe_allow_html=True,
+    )
 
-    <div class="developer-note">
-        Building practical AI-powered applications, modern web tools,
-        and interactive software solutions with Python and Streamlit.
-    </div>
-</div>
-"""
+    st.markdown(
+        "<div class='developer-campus'>"
+        "🎓 COMSATS University Islamabad<br>"
+        "Sahiwal Campus"
+        "</div>",
+        unsafe_allow_html=True,
+    )
 
-st.markdown(developer_html, unsafe_allow_html=True)
+    st.markdown(
+        "<p class='developer-note-text'>"
+        "Building practical AI-powered applications, modern web tools, "
+        "and interactive software solutions with Python and Streamlit."
+        "</p>",
+        unsafe_allow_html=True,
+    )
 
 
 # ============================================================
